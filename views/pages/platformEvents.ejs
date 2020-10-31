@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    Platform Events received:
+    <div id="content"></div>
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var content = document.getElementById("content");
+
+    var socket = io.connect();
+
+    socket.on("order", function (newOrder) {
+      var el = document.createElement("div");
+      el.className = "row";
+      el.innerHTML = JSON.stringify(newOrder);
+      content.insertBefore(el, content.firstChild);
+    });
+  </script>
+</html>

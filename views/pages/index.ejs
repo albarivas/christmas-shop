@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <div>
+      <h1>Available Endpoints:</h1>
+
+      <p>GET /orders --> returns all existing orders</p>
+      <p>
+        GET /orders-platform-events --> socket that listens to received order
+        platform events
+      </p>
+      <p>
+        GET /order/[order_number] --> returns the specified order header
+      </p>
+      <p>
+        GET /order/[order_number]/lines/ --> returns the the lines of the
+        specified order
+      </p>
+      <p>POST /order --> creates new order - accepts lines. Example:</p>
+
+      <pre style="color: #000000; background: #ffffff;">
+        <span style='color:#696969; '>{</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"order_number":206,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"session_id":"rs7t5ashgd7hZ4Dxij",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"sales_org":"Clesworks Spain",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"sold_to":"Francisco Santos",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"ship_to":"Francisco Santos",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"bill_to":"Francisco Santos",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"customer_number":45,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"delivery_terms":"15 days max",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"delivery_date":"2020-06-15",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"status":"in_preparation",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"lines":[</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;{</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"order_line_number":1,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"order_number":206,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"step":"in_warehouse",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"quantity":1,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"item": "iPhone 8",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"product_number":366,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"delivery_schedule":"2020-06-15",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"plant":"warehouse A"</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;}</span>
+        <span style='color:#808030; '>&#xa0;&#xa0;]</span>
+        <span style='color:#696969; '>}</span>
+      </pre>
+
+      <p>
+        POST /order/[order_number] --> updates existing order status. Example:
+      </p>
+
+      <pre style="color: #000000; background: #ffffff;">
+        <span style='color:#696969; '>{</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"status":"delivered"</span>
+        <span style='color:#696969; '>}</span>
+      </pre>
+    </div>
+  </body>
+</html>
