@@ -1,42 +1,41 @@
-DROP TABLE IF EXISTS order_line CASCADE;
-DROP TABLE IF EXISTS sales_order CASCADE;
+DROP TABLE IF EXISTS invoice_line;
+DROP TABLE IF EXISTS invoice;
 
-create table sales_order(
-  order_number INTEGER PRIMARY KEY,
+create table invoice(
+  invoice_number INTEGER PRIMARY KEY,
   session_id VARCHAR(255),
-  sales_org VARCHAR(255),
+  order_number INTEGER,
   sold_to VARCHAR(255),
   ship_to VARCHAR(255),
   bill_to VARCHAR(255),
-  delivery_terms VARCHAR(255),
-  delivery_date DATE,
-  status VARCHAR(255)
+  customer_number INTEGER,
+  total_value DECIMAL,
+  total_taxes DECIMAL
 );
-create table order_line(
-  order_line_number INTEGER,
-  order_number INTEGER REFERENCES sales_order(order_number),
-  step VARCHAR(255),
+create table invoice_line(
+  invoice_line_number INTEGER,
+  invoice_number INTEGER REFERENCES invoice(invoice_number),
   quantity INTEGER,
   item VARCHAR(255),
   product_number INTEGER,
-  delivery_schedule DATE,
-  plant VARCHAR(255),
-  PRIMARY KEY (order_number, order_line_number)
+  price DECIMAL,
+  vat DECIMAL,
+  PRIMARY KEY (invoice_number, invoice_line_number)
 );
 
 /* TEST DATA */
-INSERT INTO sales_order(order_number, session_id, sales_org, sold_to, ship_to, bill_to, delivery_terms, delivery_date, status)
-VALUES  (203,'as765ashgdahv4Dxij','Clesworks Spain','Alba Rivas','Alba Rivas','Alba Rivas','15 days max','2020-06-15','dispatched'),
-        (204,'asdda34657Ggvadsbs','Clesworks Amsterdam','Cleston Oliveira','Cleston Oliveira','Cleston Oliveira','15 days max','2020-05-15','delivered'),
-        (205,'lfgjkdhyU8a7sdghbd','Clesworks UK','Pedro Molina','Pedro Molina','Pedro Molina','15 days max','2020-05-15','delivered');
+INSERT INTO invoice(invoice_number, session_id, order_number, sold_to, ship_to, bill_to, customer_number, total_value, total_taxes)
+VALUES  (1203,'as765ashgdahv4Dxij',3246,'Alba Rivas','Alba Rivas','Alba Rivas',230,3510.50,349.20),
+        (1204,'asdda34657Ggvadsbs',3247,'Cleston Oliveira','Cleston Oliveira','Cleston Oliveira',75,10987.35,579.30),
+        (1205,'lfgjkdhyU8a7sdghbd',3248,'Pedro Molina','Pedro Molina','Pedro Molina',450,1563.70,135.90);
 
-INSERT INTO order_line (order_line_number, order_number, step, quantity, item, product_number, delivery_schedule, plant)
-VALUES  (1,203,'in_transit',1,'Macbook PRO X',234,'2020-06-15','warehouse A'),
-        (2,203,'in_transit',1,'Dell 1234',786,'2020-06-15','warehouse A'),
-        (1,204,'delivered',1,'Macbook PRO X',234,'2020-05-15','warehouse A'),
-        (2,204,'delivered',1,'iPhone 8',366,'2020-05-15','warehouse A'),
-        (3,204,'delivered',1,'Dell 1234',786,'2020-05-15','warehouse A'),
-        (1,205,'delivered',1,'Xiaomi Pure',383,'2020-05-15','warehouse A'),
-        (2,205,'delivered',1,'LG colors',900,'2020-05-15','warehouse A');
+INSERT INTO invoice_line(invoice_line_number,invoice_number, quantity, item, product_number, price, vat)
+VALUES  (1,1203,1,'Macbook PRO X',234,1200.30,15),
+        (2,1203,1,'Dell 1234',786,987.5,15),
+        (1,1204,1,'Macbook PRO X',234,1200.30,15),
+        (2,1204,1,'iPhone 8',366,887.3,15),
+        (3,1204,1,'Dell 1234',786,987.5,15),
+        (1,1205,1,'Xiaomi Pure',383,500,15),
+        (2,1205,1,'LG colors',900,334.7,15);
 
 

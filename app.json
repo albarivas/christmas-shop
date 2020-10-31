@@ -1,8 +1,8 @@
 {
-  "name": "Time Machine Order Fulfilment",
-  "description": "Order Fulfilment REST API for Time Machine Project",
-  "repository": "https://github.com/albarivas/time-machine-order-fulfilment",
-  "logo": "https://github.com/albarivas/time-machine-order-fulfilment",
+  "name": "Time Machine Financials",
+  "description": "Financials REST API for Time Machine Project",
+  "repository": "https://github.com/albarivas/time-machine-financials",
+  "logo": "https://github.com/albarivas/time-machine-financials",
   "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs"
 }

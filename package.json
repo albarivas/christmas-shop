@@ -1,23 +1,20 @@
 {
-  "name": "time-machine-order-fulfilment",
+  "name": "time-machine-financials",
   "version": "0.1.0",
-  "description": "Order Fulfilment REST API for Time Machine Project",
+  "description": "Financials REST API for Time Machine Project",
   "engines": {
     "node": "12.x"
   },
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js",
+    "test": "node test.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
-    "faye": "^1.3.0",
-    "http": "0.0.1-security",
-    "nforce": "^1.12.2",
-    "pg": "^8.2.0",
-    "socket.io": "^2.3.0"
+    "pg": "^8.2.0"
   },
   "devDependencies": {
     "request": "^2.81.0",
@@ -25,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/albarivas/time-machine-order-fulfilment"
+    "url": "https://github.com/albarivas/time-machine-financials"
   },
   "keywords": [
     "node",

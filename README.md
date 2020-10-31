@@ -1,32 +1,28 @@
-# Time Machine Order Fulfilment
+# Time Machine Financials
 
-Order Fulfilment REST API for Time Machine Project built with Node.js app using [Express 4](http://expressjs.com/).
+Financials REST API for Time Machine Project built with Node.js app using [Express 4](http://expressjs.com/).
+
 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
 
 ```sh
-$ git clone https://github.com/albarivas/time-machine-order-fulfilment # or clone your own fork
-$ cd time-machine-order-fulfilment
+$ git clone https://github.com/albarivas/time-machine-financials # or clone your own fork
+$ cd time-machine-financials
 $ npm install
 ```
 
 Install postgres and psql locally. Follow the instructions from the [heroku site](https://devcenter.heroku.com/articles/heroku-postgresql). Then create an initialize a local db:
 
 ```sh
-$ createdb order-fulfilment
-$ cat init.sql | psql order-fulfilment
+$ createdb financials
+$ cat init.sql | psql financials
 $ export LOCAL=TRUE
-$ export DATABASE_URL=postgres://localhost/order-fulfilment
-$ export SF_CLIENT_ID=YOUR_CLIENT_ID
-$ export SF_CLIENT_SECRET=YOUR_CLIENT_SECRET
-$ export SF_USER_NAME=YOUR_USER_NAME
-$ export SF_USER_PASSWORD=YOUR_PASSWORD
+$ export DATABASE_URL=postgres://localhost/financials 
 ```
 
 Run the app locally.
-
 ```sh
 $ heroku local web
 ```
@@ -42,7 +38,6 @@ $ cat init.sql | heroku pg:psql
 $ git push heroku master
 $ heroku open
 ```
-
 or
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
