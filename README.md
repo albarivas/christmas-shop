@@ -18,8 +18,6 @@ Install postgres and psql locally. Follow the instructions from the [heroku site
 ```sh
 $ createdb christmas_shop
 $ cat init.sql | psql christmas_shop
-$ export LOCAL=TRUE
-$ export DATABASE_URL=postgres://localhost/christmas_shop 
 ```
 
 Run the app locally.

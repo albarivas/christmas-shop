@@ -5,20 +5,29 @@ const path = require('path');
 const { Pool } = require('pg');
 
 const PORT = process.env.PORT || 5000;
-
+console.log('process.env.DATABASE_URL: ' + process.env.DATABASE_URL);
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.LOCAL ? false : { rejectUnauthorized: false }
 });
 
 const handleResponse = (response, error, results) => {
+  console.log('response: ' + response);
+  console.log('error: ' + error);
+  console.log('results: ' + results);
   if (error) {
     response.status(400).json({ status: 'error', message: `Error:${error}` });
   }
-  response.status(200).json(results.rows);
+  else if (results) {
+    response.status(200).json(results.rows);
+  }
+  else {
+    response.status(200).json([]);
+  }
 };
 
 const getProducts = async (request, response) => {
+  console.log('querying products');
   pool.query('SELECT * FROM product', handleResponse.bind(null, response));
 };
 

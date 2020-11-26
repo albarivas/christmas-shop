@@ -5,38 +5,19 @@
     <div>
       <h1>Tienda Mansión Navideña</h1>
 
-      <p>GET /invoices --> returns all existing invoices</p>
+      <p>GET /products --> returns all existing products</p>
       <p>
-        GET /invoice/[invoice_number] --> returns the specified invoice header
+        GET /product/[product_number] --> returns the specified product header
       </p>
-      <p>
-        GET /invoice/[invoice_number]/lines/ --> returns the the lines of the
-        specified invoice
-      </p>
-      <p>POST /invoice --> creates new invoice - accepts lines. Example:</p>
+      <p>POST /product --> creates new product. Example:</p>
 
       <pre style="color:#000000;background:#ffffff;">
         <span style='color:#696969; '>{</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"invoice_number":1206,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"session_id":"rs7t5ashgd7hZ4Dxij",</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"order_number":3247,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"sold_to":"Francisco Santos",</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"ship_to":"Francisco Santos",</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"bill_to":"Francisco Santos",</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"customer_number":45,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"total_value":6532.76,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"total_taxes":1307.34,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"lines":[</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;{</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"invoice_line_number":1,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"invoice_number":1206,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"quantity":1,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"item": "iPhone 8",</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"product_number":366,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"price":887.3,</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;"vat":15</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;}</span>
-        <span style='color:#808030; '>&#xa0;&#xa0;]</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"product_number":10,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"product_name":"Papa Noel",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"product_description":"Papa Noel impreso",</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"units_in_inventory":30,</span>
+        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"credits":150,</span>
         <span style='color:#696969; '>}</span>
       </pre>
     </div>
