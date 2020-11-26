@@ -1,7 +1,7 @@
 {
-  "name": "time-machine-financials",
+  "name": "christmas-shop",
   "version": "0.1.0",
-  "description": "Financials REST API for Time Machine Project",
+  "description": "Online Shop to buy Christmas items with credits won on familiar Christmas games",
   "engines": {
     "node": "12.x"
   },
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/albarivas/time-machine-financials"
+    "url": "https://github.com/albarivas/christmas-shop"
   },
   "keywords": [
     "node",

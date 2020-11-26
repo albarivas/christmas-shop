@@ -18,27 +18,20 @@ const handleResponse = (response, error, results) => {
   response.status(200).json(results.rows);
 };
 
-const getInvoices = async (request, response) => {
-  pool.query('SELECT * FROM invoice', handleResponse.bind(null, response));
+const getProducts = async (request, response) => {
+  pool.query('SELECT * FROM product', handleResponse.bind(null, response));
 };
 
-const getInvoice = async (request, response) => {
+const getProduct = async (request, response) => {
   pool.query(
-    `SELECT * FROM invoice WHERE invoice_number = ${request.params.invoiceNumber}`,
+    `SELECT * FROM product WHERE product_number = ${request.params.productNumber}`,
     handleResponse.bind(null, response)
   );
 };
 
-const getInvoiceLines = async (request, response) => {
-  pool.query(
-    `SELECT * FROM invoice_line WHERE invoice_number = ${request.params.invoiceNumber}`,
-    handleResponse.bind(null, response)
-  );
-};
-
-const addInvoice = async (request, response) => {
+/*const addproduct = async (request, response) => {
   const {
-    invoice_number,
+    product_number,
     session_id,
     order_number,
     sold_to,
@@ -53,9 +46,9 @@ const addInvoice = async (request, response) => {
   try {
     await connection.query('BEGIN');
     await connection.query(
-      'INSERT INTO invoice (invoice_number, session_id, order_number, sold_to, ship_to, bill_to, customer_number, total_value, total_taxes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
+      'INSERT INTO product (product_number, session_id, order_number, sold_to, ship_to, bill_to, customer_number, total_value, total_taxes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
       [
-        invoice_number,
+        product_number,
         session_id,
         order_number,
         sold_to,
@@ -68,17 +61,17 @@ const addInvoice = async (request, response) => {
     );
     const formattedLines = lines.map(line => {
       const {
-        invoice_line_number,
-        invoice_number,
+        product_line_number,
+        product_number,
         quantity,
         item,
         product_number,
         price,
         vat
       } = line;
-      return `(${invoice_line_number}, ${invoice_number}, ${quantity}, '${item}', ${product_number}, ${price}, ${vat})`;
+      return `(${product_line_number}, ${product_number}, ${quantity}, '${item}', ${product_number}, ${price}, ${vat})`;
     });
-    const linesInsertStatement = `INSERT INTO invoice_line (invoice_line_number,invoice_number, quantity, item, product_number, price, vat) VALUES ${formattedLines.join(
+    const linesInsertStatement = `INSERT INTO product_line (product_line_number,product_number, quantity, item, product_number, price, vat) VALUES ${formattedLines.join(
       ','
     )}`;
 
@@ -92,7 +85,7 @@ const addInvoice = async (request, response) => {
   } finally {
     connection.release();
   }
-};
+};*/
 
 express()
   .use(bodyParser.json())
@@ -101,8 +94,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/invoices', getInvoices)
-  .get('/invoice/:invoiceNumber', getInvoice)
-  .get('/invoice/:invoiceNumber/lines', getInvoiceLines)
-  .post('/invoice', addInvoice)
+  .get('/products', getProducts)
+  .get('/product/:productNumber', getProduct)
+//  .post('/product', addproduct)
   .listen(PORT, () => console.log(`Listening on ${PORT}`));

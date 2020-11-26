@@ -1,25 +1,25 @@
-# Time Machine Financials
+# Christmas Shop
 
-Financials REST API for Time Machine Project built with Node.js app using [Express 4](http://expressjs.com/).
-
+Online Shop to buy Christmas items with credits won on familiar Christmas games.
+Built with Node.js app using [Express 4](http://expressjs.com/).
 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
 
 ```sh
-$ git clone https://github.com/albarivas/time-machine-financials # or clone your own fork
-$ cd time-machine-financials
+$ git clone https://github.com/albarivas/christmas-shop # or clone your own fork
+$ cd christmas-shop
 $ npm install
 ```
 
 Install postgres and psql locally. Follow the instructions from the [heroku site](https://devcenter.heroku.com/articles/heroku-postgresql). Then create an initialize a local db:
 
 ```sh
-$ createdb financials
-$ cat init.sql | psql financials
+$ createdb christmas_shop
+$ cat init.sql | psql christmas_shop
 $ export LOCAL=TRUE
-$ export DATABASE_URL=postgres://localhost/financials 
+$ export DATABASE_URL=postgres://localhost/christmas_shop 
 ```
 
 Run the app locally.
