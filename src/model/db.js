@@ -1,41 +1,21 @@
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const express = require('express');
-const path = require('path');
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
-const PORT = process.env.PORT || 5000;
-console.log('process.env.DATABASE_URL: ' + process.env.DATABASE_URL);
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.LOCAL ? false : { rejectUnauthorized: false }
+  ssl: process.env.LOCAL ? false : { rejectUnauthorized: false },
 });
 
-const handleResponse = (response, error, results) => {
-  console.log('response: ' + response);
-  console.log('error: ' + error);
-  console.log('results: ' + results);
-  if (error) {
-    response.status(400).json({ status: 'error', message: `Error:${error}` });
-  }
-  else if (results) {
-    response.status(200).json(results.rows);
-  }
-  else {
-    response.status(200).json([]);
-  }
-};
+// Returns a promise, when promise is fulfilled, results received, when rejected, error received
+const getProducts = async () => pool.query("SELECT * FROM product");
 
-const getProducts = async (request, response) => {
-  console.log('querying products');
-  pool.query('SELECT * FROM product', handleResponse.bind(null, response));
-};
-
-const getProduct = async (request, response) => {
+const getProduct = async (request) =>
   pool.query(
-    `SELECT * FROM product WHERE product_number = ${request.params.productNumber}`,
-    handleResponse.bind(null, response)
+    `SELECT * FROM product WHERE product_number = ${request.params.productNumber}`
   );
+
+module.exports = {
+  getProducts: getProducts,
+  getProduct: getProduct,
 };
 
 /*const addproduct = async (request, response) => {
@@ -95,15 +75,3 @@ const getProduct = async (request, response) => {
     connection.release();
   }
 };*/
-
-express()
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
-  .use(cors())
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .get('/products', getProducts)
-  .get('/product/:productNumber', getProduct)
-//  .post('/product', addproduct)
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
