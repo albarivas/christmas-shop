@@ -5,12 +5,14 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.get("/products", (request, response) => {
+  console.log('API call - getProducts');
   executeQueryAndBuildResponse(db.getProducts, request, response);
 });
 router.get("/product/:productNumber", (request, response) => {
+  console.log('API call - getProduct - ' + request.params.productNumber);
   executeQueryAndBuildResponse(db.getProduct, request, response);
 });
-//  .post('/product', addproduct)
+//router.post('/product', addproduct)
 
 const executeQueryAndBuildResponse = async (queryFunction, request, response) => {
   try {
