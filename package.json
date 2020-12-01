@@ -7,8 +7,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
+    "serve": "node index.js",
+    "watch": "nodemon"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -19,6 +19,8 @@
     "helmet": "^4.2.0"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6",
     "request": "^2.81.0",
     "tape": "^4.7.0"
   },
