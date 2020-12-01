@@ -7,13 +7,16 @@
 
       <p>GET /api/v1/products --> returns all existing products</p>
       <p>
-        GET /api/v1/product/[product_number] --> returns the specified product header
+        GET /api/v1/product/[familyMemberId] --> returns products purchased by a
+        family member
+      </p>
+      <p>
+        GET /api/v1/product/[id] --> returns the specified product details
       </p>
       <p>POST /api/v1/product --> creates new product. Example:</p>
 
-      <pre style="color:#000000;background:#ffffff;">
+      <pre style="color: #000000; background: #ffffff;">
         <span style='color:#696969; '>{</span>
-        <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"product_number":10,</span>
         <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"product_name":"Papa Noel",</span>
         <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"product_description":"Papa Noel impreso",</span>
         <span style='color:#696969; '>&#xa0;&#xa0;&#xa0;"units_in_inventory":30,</span>
