@@ -20,12 +20,13 @@ $ createdb christmas_shop
 $ cat init.sql | psql christmas_shop
 ```
 
-Run the app locally.
+Run the app locally for development, with hot reloading enabled.
+
 ```sh
-$ heroku local web
+$ npm run watch
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Your app should now be running on [localhost:3001](http://localhost:3001/).
 
 ## Deploying to Heroku
 
@@ -36,6 +37,7 @@ $ cat init.sql | heroku pg:psql
 $ git push heroku master
 $ heroku open
 ```
+
 or
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
