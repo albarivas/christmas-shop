@@ -5,23 +5,31 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.get("/products", (request, response) => {
-  executeQueryAndBuildResponse(db.getProducts, request, response);
+  executeQueryAndBuildResponse(response, db.getProducts);
 });
 router.get("/products/:familyMemberId", (request, response) => {
-  executeQueryAndBuildResponse(db.getProductsByFamilyMember, request, response);
+  executeQueryAndBuildResponse(
+    response,
+    db.getProductsByFamilyMember,
+    request.params.familyMemberId
+  );
 });
-router.get("/product/:productNumber", (request, response) => {
-  executeQueryAndBuildResponse(db.getProduct, request, response);
+router.get("/product/:productId", (request, response) => {
+  executeQueryAndBuildResponse(
+    response,
+    db.getProduct,
+    request.params.productId
+  );
 });
 //router.post('/product', addproduct)
 
 const executeQueryAndBuildResponse = async (
+  response,
   queryFunction,
-  request,
-  response
+  ...params
 ) => {
   try {
-    const results = await queryFunction(request);
+    const results = await queryFunction(params);
     // Will only execute if promise is resolved
     if (results) {
       response.status(200).json(results.rows);

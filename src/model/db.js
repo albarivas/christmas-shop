@@ -8,23 +8,22 @@ const pool = new Pool({
 // Returns a promise, when promise is fulfilled, results received, when rejected, error received
 const getProducts = async () => pool.query("SELECT * FROM product");
 
-const getProductsByFamilyMember = async (request) =>
+const getProductsByFamilyMember = async (familyMemberId) =>
   pool.query(
     `SELECT product.id, product.product_name, product.product_description, product.picture, family_member_product.units
      FROM family_member_product 
      INNER JOIN product ON product.id = family_member_product.product 
-     WHERE family_member_product.family_member = ${request.params.familyMemberId}`
+     WHERE family_member_product.family_member = $1`,
+    ["" + familyMemberId]
   );
 
-const getProduct = async (request) =>
-  pool.query(
-    `SELECT * FROM product WHERE id = ${request.params.productNumber}`
-  );
+const getProduct = async (productId) =>
+  pool.query(`SELECT * FROM product WHERE id = $1`, ["" + productId]);
 
 module.exports = {
-  getProducts: getProducts,
-  getProductsByFamilyMember: getProductsByFamilyMember,
-  getProduct: getProduct,
+  getProducts,
+  getProductsByFamilyMember,
+  getProduct,
 };
 
 /*const addproduct = async (request, response) => {
