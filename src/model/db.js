@@ -14,72 +14,104 @@ const getProductsByFamilyMember = async (familyMemberId) =>
      FROM family_member_product 
      INNER JOIN product ON product.id = family_member_product.product 
      WHERE family_member_product.family_member = $1`,
-    ["" + familyMemberId]
+    [parseInt(familyMemberId)]
   );
 
 const getProduct = async (productId) =>
-  pool.query(`SELECT * FROM product WHERE id = $1`, ["" + productId]);
+  pool.query(`SELECT * FROM product WHERE id = $1`, [productId]);
+
+const purchaseProducts = async (familyMemberId, productId, unitsToPurchase) => {
+  // TODO: pasing URL parameters to the correct type should be done in an upper layer
+  console.log("Purchasing product:");
+  console.log("familyMember" + familyMemberId);
+  console.log("productId" + productId);
+  console.log("unitsToPurchase" + unitsToPurchase);
+  const connection = await pool.connect();
+  try {
+    await connection.query("BEGIN");
+
+    // Retrieve family member
+    const familyMemberRows = await connection.query(
+      `SELECT credits_available FROM family_member WHERE id = $1`,
+      [parseInt(familyMemberId)]
+    );
+    if (familyMemberRows.rows.length === 0) {
+      throw "Unknown family member";
+    }
+    const familyMember = familyMemberRows.rows[0];
+
+    // Retrieve product
+    const productRows = await connection.query(
+      `SELECT units_in_inventory, credits FROM product WHERE id = $1`,
+      [productId]
+    );
+    if (productRows.rows.length === 0) {
+      throw "Unknown product";
+    }
+    const product = productRows.rows[0];
+
+    // Validations
+    if (product.credits * unitsToPurchase > familyMember.creditsAvailable) {
+      throw "Not enough credits";
+    }
+    if (product.units_in_inventory < unitsToPurchase) {
+      throw "Not enough units in inventory";
+    }
+
+    // Insert or update family member product
+    const familyMemberProduct = await connection.query(
+      "SELECT units FROM family_member_product WHERE family_member = $1 AND product = $2",
+      [parseInt(familyMemberId), productId]
+    );
+
+    if (familyMemberProduct.rows.length === 0) {
+      await connection.query(
+        "INSERT INTO family_member_product (family_member, product, units) VALUES ($1,$2,$3)",
+        [parseInt(familyMemberId), productId, unitsToPurchase]
+      );
+    } else {
+      await connection.query(
+        "UPDATE family_member_product SET units = $1 WHERE family_member = $2 AND product = $3",
+        [unitsToPurchase, parseInt(familyMemberId), productId]
+      );
+    }
+    console.log(familyMember.credits_available);
+    console.log(product.credits);
+    // Update family member credits
+    await connection.query(
+      "UPDATE family_member SET credits_available = $1 WHERE id = $2",
+      [
+        familyMember.credits_available - product.credits * unitsToPurchase,
+        familyMemberId,
+      ]
+    );
+
+    // Update product inventory
+    await connection.query(
+      "UPDATE product SET units_in_inventory = $1 WHERE id = $2",
+      [product.units_in_inventory - unitsToPurchase, productId]
+    );
+  } catch (error) {
+    await connection.query("ROLLBACK");
+    console.log(error);
+    throw error;
+  } finally {
+    connection.release();
+  }
+};
+
+const getFamilyMembers = async () => pool.query("SELECT * FROM family_member");
+
+const getFamilyMember = async (familyMemberId) =>
+  pool.query("SELECT * FROM family_member WHERE id = $1", [
+    parseInt(familyMemberId),
+  ]);
 
 module.exports = {
   getProducts,
   getProductsByFamilyMember,
   getProduct,
+  purchaseProducts,
+  getFamilyMembers,
+  getFamilyMember,
 };
-
-/*const addproduct = async (request, response) => {
-  const {
-    id,
-    session_id,
-    order_number,
-    sold_to,
-    ship_to,
-    bill_to,
-    customer_number,
-    total_value,
-    total_taxes
-  } = request.body;
-
-  const connection = await pool.connect();
-  try {
-    await connection.query('BEGIN');
-    await connection.query(
-      'INSERT INTO product (id, session_id, order_number, sold_to, ship_to, bill_to, customer_number, total_value, total_taxes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
-      [
-        id,
-        session_id,
-        order_number,
-        sold_to,
-        ship_to,
-        bill_to,
-        customer_number,
-        total_value,
-        total_taxes
-      ]
-    );
-    const formattedLines = lines.map(line => {
-      const {
-        product_line_number,
-        id,
-        quantity,
-        item,
-        id,
-        price,
-        vat
-      } = line;
-      return `(${product_line_number}, ${id}, ${quantity}, '${item}', ${id}, ${price}, ${vat})`;
-    });
-    const linesInsertStatement = `INSERT INTO product_line (product_line_number,id, quantity, item, id, price, vat) VALUES ${formattedLines.join(
-      ','
-    )}`;
-
-    await connection.query(linesInsertStatement);
-    await connection.query('COMMIT');
-    response.status(201).json({ status: 'success', message: 'Order added.' });
-  } catch (error) {
-    await connection.query('ROLLBACK');
-    console.log(error);
-    response.status(400).json({ status: 'error', message: `Error:${error}` });
-  } finally {
-    connection.release();
-  }
-};*/

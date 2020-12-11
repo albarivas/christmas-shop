@@ -1,12 +1,14 @@
-var router = require("express").Router();
+const router = require("express").Router();
 const db = require("../model/db");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+
 router.get("/products", (request, response) => {
   executeQueryAndBuildResponse(response, db.getProducts);
 });
+
 router.get("/products/:familyMemberId", (request, response) => {
   executeQueryAndBuildResponse(
     response,
@@ -14,6 +16,17 @@ router.get("/products/:familyMemberId", (request, response) => {
     request.params.familyMemberId
   );
 });
+
+router.post("/products/:familyMemberId", (request, response) => {
+  executeQueryAndBuildResponse(
+    response,
+    db.purchaseProducts,
+    request.params.familyMemberId,
+    request.body.productId,
+    request.body.unitsToPurchase
+  );
+});
+
 router.get("/product/:productId", (request, response) => {
   executeQueryAndBuildResponse(
     response,
@@ -21,7 +34,18 @@ router.get("/product/:productId", (request, response) => {
     request.params.productId
   );
 });
-//router.post('/product', addproduct)
+
+router.get("/members", (request, response) => {
+  executeQueryAndBuildResponse(response, db.getFamilyMembers);
+});
+
+router.get("/members/:familyMemberId", (request, response) => {
+  executeQueryAndBuildResponse(
+    response,
+    db.getFamilyMember,
+    request.params.familyMemberId
+  );
+});
 
 const executeQueryAndBuildResponse = async (
   response,
@@ -29,7 +53,8 @@ const executeQueryAndBuildResponse = async (
   ...params
 ) => {
   try {
-    const results = await queryFunction(params);
+    const results = await queryFunction(...params);
+
     // Will only execute if promise is resolved
     if (results) {
       response.status(200).json(results.rows);
@@ -38,6 +63,7 @@ const executeQueryAndBuildResponse = async (
     }
   } catch (error) {
     // Will execute if promise is rejected or if there's an error in the try block
+    console.error(error);
     response.status(400).json({ status: "error", message: `Error:${error}` });
   }
 };
