@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "node index.js",
-    "watch": "nodemon"
+    "watch": "nodemon --exec \"heroku local\" --signal SIGTERM"
   },
   "dependencies": {
     "compression": "^1.7.4",

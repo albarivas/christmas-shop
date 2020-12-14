@@ -1,4 +1,3 @@
-require("dotenv/config");
 const compression = require("compression");
 const helmet = require("helmet");
 const express = require("express");
