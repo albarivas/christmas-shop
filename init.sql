@@ -27,7 +27,7 @@ create table family_member_product(
 /* TEST DATA */
 INSERT INTO product(product_name, product_description, units_in_inventory, credits, picture)
 VALUES  ('Small Christmas Tree','Christmas Tree printed illustration, small size', 50, 100, 'resources/images/arbol-peq.png'),
-        ('Medium Christmas Tree','Christmas Tree printed illustration, medium size', 50, 100, 'resources/images/arbol-med.png'),
+        ('Medium Christmas Tree','Christmas Tree printed illustration, medium size', 20, 200, 'resources/images/arbol-med.png'),
         ('Big Christmas Tree','Christmas Tree printed illustration, big size', 5, 300, 'resources/images/arbol-gra.png'),
         ('Small Snowman','Snowman printed illustration, small size', 50, 80, 'resources/images/muneco-peq.png'),
         ('Medium Snowman','Snowman printed illustration, medium size', 20, 160, 'resources/images/muneco-med.png'),

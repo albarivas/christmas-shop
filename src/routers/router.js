@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const { Router } = require("express");
+const router = new Router();
 const db = require("../model/db");
 const bodyParser = require("body-parser");
 
@@ -47,11 +48,11 @@ router.get("/members/:familyMemberId", (request, response) => {
   );
 });
 
-const executeQueryAndBuildResponse = async (
+async function executeQueryAndBuildResponse(
   response,
   queryFunction,
   ...params
-) => {
+) {
   try {
     const results = await queryFunction(...params);
 
@@ -64,8 +65,8 @@ const executeQueryAndBuildResponse = async (
   } catch (error) {
     // Will execute if promise is rejected or if there's an error in the try block
     console.error(error);
-    response.status(400).json({ status: "error", message: `Error:${error}` });
+    response.status(500).json({ status: "error", message: `Error:${error}` });
   }
-};
+}
 
 module.exports = router;
