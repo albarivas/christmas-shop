@@ -5,12 +5,9 @@ const path = require("path");
 const cors = require("cors");
 const router = require("./src/routers/router");
 
-const API_HOST = process.env.HOST || "localhost";
-const API_PORT = process.env.API_PORT || 3002;
+const API_HOST = process.env.HOST_NAME || "localhost";
+const API_PORT = process.env.PORT || 3002;
 const STATIC_DIR = "./dist";
-
-console.log("HOST" + process.env.HOST);
-console.log("PORT" + process.env.PORT);
 
 const app = express();
 app.use(helmet());
