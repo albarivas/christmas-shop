@@ -6,7 +6,7 @@ const cors = require("cors");
 const router = require("./src/routers/router");
 
 const API_HOST = process.env.HOST_NAME || "localhost";
-const API_PORT = process.env.PORT || 3002;
+const API_PORT = process.env.PORT || 5000;
 const STATIC_DIR = "./dist";
 
 const app = express();
