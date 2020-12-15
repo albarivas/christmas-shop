@@ -1,8 +1,9 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.LOCAL ? false : { rejectUnauthorized: false },
+  connectionString:
+    process.env.DATABASE_URL || "postgres://localhost/christmas_shop",
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
 
 // Returns a promise, when promise is fulfilled, results received, when rejected, error received
